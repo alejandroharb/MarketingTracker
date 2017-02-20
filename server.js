@@ -40,9 +40,9 @@ var geoData = geoJSON.parse(data, {Point: ['lat', 'lng']});
 // console.log(geoData.features);
 var dataArr = geoData.features;
 
-geocoder.geocode('3918 Atascocita Rd Houston, Texas 77396', function(err, res) {
-	console.log(res)
-})
+// geocoder.geocode('3918 Atascocita Rd Houston, Texas 77396', function(err, res) {
+// 	console.log(res)
+// })
 
 
 app.get('/', function(req, res) {
@@ -52,7 +52,7 @@ app.get('/api', function(req, res) {
 	res.send(geoData);
 })
 
-db.sequelize.sync().then(function(){
+db.sequelize.sync({ force: true }).then(function(){
   app.listen(PORT, function() {
     console.log("Listening on port: " + PORT)
   });

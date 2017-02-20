@@ -4,7 +4,8 @@ module.exports = function(sequelize, DataTypes) {
             type: DataTypes.STRING(100),
             allowNull: false,
             validate: {
-                len: [1,100]
+                len: [1,100],
+                isAlpha: true
             }
         },
         last_name: {
@@ -12,14 +13,14 @@ module.exports = function(sequelize, DataTypes) {
             allowNull:false,
             validate: {
                 len: [1,140],
-                is: ["^[a-z]+$",'i'] //letters only
+                isAlpha: true
             }
         },
         password: {
             type: DataTypes.STRING(100),
             allowNull:false,
             validate: {
-                len: [6,100], //at least 6 letters long
+                len: [6,100],
                 isAlphanumeric: true
             }
         },
@@ -32,18 +33,19 @@ module.exports = function(sequelize, DataTypes) {
             },
         },
         manager: {
-            type: DataTypes.Boolean,
+            type: DataTypes.BOOLEAN,
             allowNull: false
         },
+    },
         {
             classMethods: {
                 associate: function(models) {
-                    User.hasMany(models.marketing, {
+                    User.hasMany(models.Market, {
                         onDelete: 'cascade'
-                    })
+                    });
                 }
             }
         }
-    });
+    );
     return User;
 }

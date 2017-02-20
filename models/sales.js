@@ -1,11 +1,11 @@
 module.exports = function(sequelize, DataTypes) {
     var Sale = sequelize.define("Sale", {
-        MonthSales: {
-            type: DataTypes.INTEGER,
+        monthSales: {
+            type: DataTypes.INTEGER(50),
             allowNull: false
-        }
+        },
         month: {
-            type: DataTypes.STRING,
+            type: DataTypes.STRING(30),
             allowNull:false
         },
     });

@@ -1,25 +1,25 @@
 module.exports = function(sequelize, DataTypes) {
-    var Marketing = sequelize.define("Marketing", {
+    var Market = sequelize.define("Market", {
         latitude: {
-            type: DataTypes.FLOAT(15),
+            type: DataTypes.FLOAT(15,15),
             allowNull: false,
             validate: {
                 len: [1,100]
             }
         },
         longitude: {
-            type: DataTypes.FLOAT(15),
+            type: DataTypes.FLOAT(15,15),
             allowNull: false,
             validate: {
                 len: [1,100]
             }
         },
-        marketingSucess: {
-            type: DataTypes.Boolean,
-            allowNull:true,
+        marketingSuccess: {
+            type: DataTypes.BOOLEAN,
+            allowNull:true
         },
         comment: {
-            type: DataTypes.Text,
+            type: DataTypes.TEXT,
             allowNull:true,
             validate: {
                 len: [0, 300]
@@ -29,17 +29,18 @@ module.exports = function(sequelize, DataTypes) {
             type: DataTypes.STRING(100),
             allowNull:true
         }
+    },
         {
             classMethods: {
                 associate: function(models) {
-                    Marketign.belongsTo(models.User) {
+                    Market.belongsTo(models.User, {
                         foreignKey: {
                             allowNull:false
                         }
-                    }
+                    });
                 }
             }
         }
-    });
-    return Marketing;
+    );
+    return Market;
 }
