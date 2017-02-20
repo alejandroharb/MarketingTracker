@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@google/maps": "^0.3.1",
     "body-parser": "^1.16.1",
     "express": "^4.14.1",
     "geojson": "^0.4.1",
