@@ -8,7 +8,12 @@ var options = {
 var geocoder = NodeGeocoder(options);
 var app = express();
 
-var PORT = 3000;
+
+//======database connection, models=========
+var db = require('./models')
+
+
+var PORT = process.env.PORT || 8080;
 
 
 
@@ -47,4 +52,8 @@ app.get('/api', function(req, res) {
 	res.send(geoData);
 })
 
-app.listen(PORT, function() {console.log("listening on Port: " + PORT)})
+db.sequelize.sync().then(function(){
+  app.listen(PORT, function() {
+    console.log("Listening on port: " + PORT)
+  });
+});
