@@ -6,8 +6,28 @@ var options = {
 }
 var geocoder = NodeGeocoder(options);
 
+//==========================google maps tests============================
 var googleMapsClient = require('@google/maps').createClient({
   key: 'AIzaSyBj7XdOzV55JxV5BBEVg0EZbTXv-Aw3ktk'
+});
+
+//--google api geocode, takes address, turns into coordinates-----
+googleMapsClient.geocode({
+  address: '3918 Atascocita Rd. Humble, Texas 77396'
+}, function(err, response) {
+  if(!err) {
+    var loc = response.json.results[0].geometry.location
+    //--------google maps api service - searches for nearby places -------------
+    googleMapsClient.placesNearby({
+      location: loc,
+      rankby: 'distance'
+    }, function(err, res) {
+      var dataArr = res.json.results;
+      for(var i = 0; i < dataArr.length; i++) {
+        console.log(dataArr[i].name)
+      }
+    })
+  }
 });
 
 //---------temporary hard coded DATA------------
