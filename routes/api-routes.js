@@ -24,7 +24,7 @@ googleMapsClient.geocode({
     }, function(err, res) {
       var dataArr = res.json.results;
       for(var i = 0; i < dataArr.length; i++) {
-        console.log(dataArr[i].name)
+        // console.log(dataArr[i])
       }
     })
   }
@@ -52,11 +52,34 @@ var data = [
 
 var geoData = geoJSON.parse(data, {Point: ['lat', 'lng']});
 
-// console.log(geoData.features[0].geometry.coordinates);
+// console.log(geoData.features);
 var dataArr = geoData.features;
 
 module.exports = function(app) {
-    app.get('/api', function(req, res) {
+    app.get('/heatmapdata', function(req, res) {
         res.send(dataArr)
+    });
+
+    app.post('/get-places', function(req, response) {
+      var pos = req.body;
+      console.log("-------position coord test-----")
+      console.log(pos)
+      //------google locates enarby businesses-----
+      googleMapsClient.placesNearby({
+        location: pos,
+        rankby: 'distance'
+      }, function(err, res) {
+        var dataArr = res.json.results;
+        var nearbyArr = [];
+        for(var i = 0; i < dataArr.length; i++) {
+          nearbyArr.push({name: dataArr[i].name, place_id: dataArr[i].place_id})
+        }
+        // console.log(nearbyArr)
+        // ====================
+        // SEND THIS DATA VIA HANDLEBARS
+        // ====================
+        response.json(nearbyArr);
+
+      })
     })
 }

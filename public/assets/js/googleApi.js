@@ -212,8 +212,7 @@ function initMap() {
         ],
         {name: 'Styled Map'});
     map = new google.maps.Map(document.getElementById('map'), {
-      zoom: 15,
-      center: new google.maps.LatLng(29.760,-95.369),
+      zoom: 16,
       mapTypeControlOptions: {
         mapTypeIds: ['roadmap', 'satellite', 'hybrid', 'terrain',
                 'styled_map']
@@ -231,10 +230,10 @@ function initMap() {
           lat: position.coords.latitude,
           lng: position.coords.longitude
         };
-
         infoWindow.setPosition(pos);
         infoWindow.setContent('Here you are!');
         map.setCenter(pos);
+
       }, function() {
         handleLocationError(true, infoWindow, map.getCenter());
       });
@@ -252,7 +251,7 @@ function initMap() {
   }
 
   //===================GET HEAT MAP DATA VIA AJAX GET REQUEST===================
-  $.ajax({url: '/api', method: 'GET'}).done(function(data) {
+  $.ajax({url: '/heatmapdata', method: 'GET'}).done(function(data) {
         // for (var i = 0; i < data.features.length; i++) {
         //   var coords = data.features[i].geometry.coordinates;
         //   var latLng = new google.maps.LatLng(coords[1],coords[0]);

@@ -1,0 +1,13 @@
+#map {
+    height: 300px;
+    width: 70%;
+}
+#checkIn {
+    background-color: #BDBDBD;
+    width:400px;
+}
+#checkIn a{
+    text-decoration: none;
+    color: black;
+    padding: 5px;
+}
