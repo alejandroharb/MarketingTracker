@@ -26,17 +26,46 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col s12">
-                    <div>
-                        <button id="checkInBtn" class="btn btn-large">Check In</button>
-                    </div>
+                <div class="col s4">
+                    <ul class="collapsible" data-collapsible="accordion">
+                        <li>
+                            <div id="checkInBtn" class="collapsible-header center-align">Check In</div>
+                            <div id="checkinDiv" class="collapsible-body">
+                                <!--preloader-->
+                                <div id="checkInPreloader" class="progress">
+                                    <div class="indeterminate"></div>
+                                </div>
+                                <!--preloader end-->
+                                <div class="col s12">
+                                    <select id="checkinSelect"></select>
+                                </div>
+                                <form action="#">
+                                    <p>
+                                    <input name="group1" type="radio" id="test1" />
+                                    <label for="test1">Private Practice (Law, Dentist, Doctor)</label>
+                                    </p>
+                                    <p>
+                                    <input name="group1" type="radio" id="test2" />
+                                    <label for="test2">Restaurant</label>
+                                    </p>
+                                    <p>
+                                    <input name="group1" type="radio" id="test3"  />
+                                    <label for="test3">Cafe</label>
+                                    </p>
+                                    <p>
+                                    <input name="group1" type="radio" id="test4" />
+                                    <label for="test4">Grocery Store</label>
+                                    </p>
+                                </form>
+                                <a id="checkInSubmit" class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">add</i></a>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
             </div>
             <div class="row">
                 <div class="col s4">
-                    <div id="checkinDiv">
-                        <select id="checkinSelect"></select>
-                    </div>
+                    
                 </div>
             </div>
         </div>
