@@ -1,13 +1,13 @@
-var geoJSON = require('geojson');
 var express = require('express');
 var path = require('path');
-var NodeGeocoder = require('node-geocoder');
-var options = {
-	provider: 'google'
-}
-var geocoder = NodeGeocoder(options);
+var bodyParser = require("body-parser");
+
 var app = express();
 
+//========handlebars setup=========
+var exphbs = require("express-handlebars");
+app.engine("handlebars", exphbs({ defaultLayout: "main" }));
+app.set("view engine", "handlebars");
 
 //======database connection, models=========
 var db = require('./models')
@@ -15,42 +15,26 @@ var db = require('./models')
 
 var PORT = process.env.PORT || 8080;
 
+// BodyParser makes it possible for our server to interpret data sent to it.
+// The code below is pretty standard.
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.text());
+app.use(bodyParser.json({ type: "application/vnd.api+json" }));
+
+// Static directory
+app.use(express.static("./public"));
 
 
-var data = [
-  { name: 'Houston', category: 'Store', street: 'Market', lat: 29.760, lng: -95.3696 },
-  { name: 'Houston', category: 'Store', street: 'Market', lat: 29.750, lng: -95.3693 },
-  { name: 'Houston', category: 'Store', street: 'Market', lat: 29.7654, lng: -95.3695 },
-  { name: 'Houston', category: 'Store', street: 'Market', lat: 29.7702, lng: -95.36981 },
-  { name: 'Houston', category: 'Store', street: 'Market', lat: 29.75013, lng: -95.36932 },
-  { name: 'Houston', category: 'Store', street: 'Market', lat: 29.76501, lng: -95.36953 },
-  { name: 'Houston', category: 'Store', street: 'Market', lat: 29.7702, lng: -95.369865 },
-  { name: 'Houston', category: 'Store', street: 'Market', lat: 29.7611, lng: -95.36973 },
-  { name: 'Houston', category: 'Store', street: 'Market', lat: 29.7611, lng: -95.36972 },
-  { name: 'Houston', category: 'Store', street: 'Market', lat: 29.761, lng: -95.36971 },
-  { name: 'Houston', category: 'Store', street: 'Market', lat: 29.76121, lng: -95.36971 },
-  { name: 'Houston', category: 'Store', street: 'Market', lat: 29.7612, lng: -95.36971 },
-  { name: 'Houston', category: 'Store', street: 'Market', lat: 29.7611, lng: -95.36971 },
-  { name: 'Houston', category: 'Store', street: 'Market', lat: 29.762, lng: -95.3680 },
-  { name: 'Houston', category: 'Store', street: 'Market', lat: 29.764, lng: -95.3690 },
-];
-
-var geoData = geoJSON.parse(data, {Point: ['lat', 'lng']});
-
-// console.log(geoData.features);
-var dataArr = geoData.features;
 
 // geocoder.geocode('3918 Atascocita Rd Houston, Texas 77396', function(err, res) {
 // 	console.log(res)
 // })
 
 
-app.get('/', function(req, res) {
-	res.sendFile(path.join(__dirname, 'index.html'))
-})
-app.get('/api', function(req, res) {
-	res.send(geoData);
-})
+//==========importing routes=============
+require('./routes/api-routes.js')(app);
+require('./routes/html-routes.js')(app);
 
 db.sequelize.sync({ force: true }).then(function(){
   app.listen(PORT, function() {
